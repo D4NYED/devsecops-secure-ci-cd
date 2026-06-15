@@ -1,69 +1,168 @@
 # DevSecOps Secure CI/CD
 
-Proyecto práctico de DevSecOps diseñado para integrar controles de seguridad automatizados dentro de un pipeline CI/CD moderno.
+Proyecto práctico de DevSecOps orientado a la integración de controles de seguridad automatizados dentro de un pipeline CI/CD moderno.
 
-## Tecnologías
+El objetivo es demostrar cómo incorporar pruebas, análisis de seguridad y validaciones automáticas desde las primeras fases del ciclo de desarrollo.
 
-- Docker
-- GitHub Actions
-- Trivy
-- Semgrep
-- OWASP ZAP
-- FastAPI
+---
 
-## Objetivos
+## Arquitectura
 
-- Automatizar la construcción de imágenes Docker
-- Detectar vulnerabilidades en dependencias y contenedores
-- Realizar análisis SAST del código fuente
-- Ejecutar pruebas DAST sobre la aplicación desplegada
-- Generar informes automáticos de seguridad
-- Implementar controles de calidad antes del despliegue
+```text
+Developer
+    │
+    ▼
+Git Push
+    │
+    ▼
+GitHub Actions
+    │
+    ├── Pytest
+    ├── Docker Build
+    └── Security Controls (próximamente)
+```
 
-## Pipeline
+---
+
+## Tecnologías implementadas
+
+* FastAPI
+* Docker
+* GitHub Actions
+* Pytest
+
+## Tecnologías planificadas
+
+* Trivy
+* Semgrep
+* OWASP ZAP
+* SARIF Reports
+* Security Gates
+
+---
+
+## Funcionalidades actuales
+
+### Aplicación web
+
+API desarrollada con FastAPI que expone endpoints básicos para validación y monitorización.
+
+Endpoints disponibles:
+
+```http
+GET /
+GET /health
+```
+
+### Contenerización
+
+La aplicación se ejecuta dentro de un contenedor Docker basado en una imagen Python Slim.
+
+### Hardening básico
+
+Se aplica el principio de mínimo privilegio ejecutando la aplicación mediante un usuario dedicado no privilegiado.
+
+```dockerfile
+RUN useradd -m appuser
+
+USER appuser
+```
+
+### Pruebas automatizadas
+
+La aplicación dispone de pruebas automatizadas utilizando Pytest.
+
+Actualmente se validan:
+
+* Endpoint raíz
+* Endpoint de salud
+
+### Integración continua
+
+Cada push a la rama principal ejecuta automáticamente:
 
 ```text
 Git Push
    │
    ▼
-Build Docker Image
+Pytest
    │
    ▼
-Trivy Scan
+Docker Build
    │
    ▼
-Semgrep Scan
-   │
-   ▼
-OWASP ZAP Scan
-   │
-   ▼
-Security Reports
+Success
 ```
+
+---
+
+## Evidencias
+
+### Pipeline CI funcionando
+
+![GitHub Actions Success](docs/screenshots/github-actions-success.png)
+
+La pipeline ejecuta automáticamente:
+
+* Instalación de dependencias
+* Ejecución de pruebas con Pytest
+* Construcción de imagen Docker
+
+---
 
 ## Estructura del proyecto
 
 ```text
 devsecops-secure-ci-cd/
-├── app/
-├── docs/
-├── reports/
 ├── .github/
 │   └── workflows/
+├── app/
+├── docs/
+│   └── screenshots/
+├── reports/
+├── tests/
+├── Dockerfile
+├── requirements.txt
 ├── README.md
 └── .gitignore
 ```
 
-## Estado
+---
 
-🚧 En desarrollo
+## Estado actual
 
-## Próximas funcionalidades
+### Completado
 
-- [ ] Aplicación FastAPI vulnerable para pruebas
-- [ ] Pipeline GitHub Actions
-- [ ] Escaneo con Trivy
-- [ ] Análisis SAST con Semgrep
-- [ ] Escaneo DAST con OWASP ZAP
-- [ ] Generación de reportes SARIF
-- [ ] Security Gates basados en severidad
+* [x] Aplicación FastAPI
+* [x] Contenerización con Docker
+* [x] Usuario no privilegiado en contenedor
+* [x] Tests automatizados con Pytest
+* [x] Pipeline CI con GitHub Actions
+
+### Próximas fases
+
+* [ ] Bandit
+* [ ] Semgrep
+* [ ] Trivy
+* [ ] OWASP ZAP
+* [ ] SARIF Reports
+* [ ] Security Gates
+* [ ] Publicación de imagen en registro de contenedores
+
+---
+
+## Objetivos de aprendizaje
+
+* Integración continua (CI)
+* Seguridad en el ciclo de desarrollo (DevSecOps)
+* Container Security
+* Static Application Security Testing (SAST)
+* Dynamic Application Security Testing (DAST)
+* Automatización de controles de seguridad
+* Hardening de contenedores
+
+---
+
+## Licencia
+
+Proyecto desarrollado con fines educativos y de demostración técnica.
