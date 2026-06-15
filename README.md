@@ -100,7 +100,7 @@ Success
 
 ### Pipeline CI funcionando
 
-![GitHub Actions Success](docs/screenshots/github-actions-success.png)
+![GitHub Actions Success](docs/screenshots/github-actions-succes.png)
 
 La pipeline ejecuta automáticamente:
 
