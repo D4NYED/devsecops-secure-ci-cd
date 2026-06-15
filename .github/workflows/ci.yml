@@ -35,6 +35,11 @@ jobs:
       - name: Run tests
         run: |
           python -m pytest -v
+      
+      - name: Run Bandit
+        run: |
+          pip install bandit
+          bandit -r app -ll    
 
       - name: Build Docker image
         run: |
